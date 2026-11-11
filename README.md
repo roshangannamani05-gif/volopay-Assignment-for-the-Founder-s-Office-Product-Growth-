@@ -6,7 +6,7 @@ Tell Claude who to invoice -> a live, trackable invoice appears in this app. No 
 2. Render -> New Web Service -> connect repo. Build: `npm install`  Start: `npm start`
 3. Add a Disk mounted at `/data` and env var `DB_PATH=/data/data.db` (otherwise data resets on redeploy).
 4. Env var `BASE_URL=https://<your-app>.onrender.com` (no trailing slash).
-5. Optional: `RESEND_API_KEY` + `MAIL_FROM` for real overdue-reminder emails (without them reminders are logged only).
+5. Optional: `RESEND_API_KEY` + `MAIL_FROM` for real overdue-reminder emails (without them reminders are logged only.
 
 ## Connect to Claude
 1. Open the live app, log in (test login: demo / demo1234).
