@@ -25,12 +25,12 @@ const total = (inv) => JSON.parse(inv.items).reduce((s, i) => s + i.quantity * i
 const isOverdue = (inv) => inv.status !== "paid" && inv.due_date && inv.due_date < now().slice(0, 10);
 const label = (inv) => (inv.status === "paid" ? "paid" : isOverdue(inv) ? "overdue" : inv.viewed_at ? "viewed" : "sent");
 
-function createUser(username, password, business = "") {
+function createUser(username, password, business = "", token = crypto.randomBytes(20).toString("hex")) {
   const salt = crypto.randomBytes(8).toString("hex");
-  const token = crypto.randomBytes(20).toString("hex");
   db.prepare("insert into users(username,salt,hash,token,business) values(?,?,?,?,?)").run(username, salt, hash(password, salt), token, business);
 }
-if (!db.prepare("select 1 from users where username='demo'").get()) createUser("demo", "demo1234", "Demo Studio");
+// DEMO_TOKEN keeps the demo account's MCP link stable even if the database resets (free hosting)
+if (!db.prepare("select 1 from users where username='demo'").get()) createUser("demo", "demo1234", "Demo Studio", process.env.DEMO_TOKEN || undefined);
 
 const sessions = new Map();
 const parseCookies = (req) => Object.fromEntries((req.headers.cookie || "").split(";").filter(Boolean).map((c) => c.trim().split("=")));
